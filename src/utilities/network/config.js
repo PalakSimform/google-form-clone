@@ -1,5 +1,5 @@
-export const BASE_URL = "localhost:9000/";
+export const BASE_URL = "http://localhost:9000/";
 
-export const ADD_URL = "localhost:9000/add_questions/";
+export const ADD_URL = "add_questions";
 
 

@@ -14,7 +14,7 @@ export const GetRequest = async (url) => {
 export const PostRequest = async (url,payload) => {
   try {
     console.log('Url',url,JSON.stringify(payload))
-    const apiResponse = await axios.post(`${ADD_URL}${url}`,payload);
+    const apiResponse = await axios.post(`${BASE_URL}${url}`,payload);
     console.log({ apiResponse });
     const response = apiResponse.status === 200 ? apiResponse.data : {};
     return response;
