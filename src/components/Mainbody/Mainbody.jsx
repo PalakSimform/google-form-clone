@@ -2,6 +2,8 @@ import React,{useState,useEffect} from 'react'
 import "./Mainbody.css"
 import Card from "./Card" 
 import axios from "axios";
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 function Mainbody() {
     const [files,setFiles]=useState([]);
@@ -12,7 +14,6 @@ function Mainbody() {
             var request = await axios.get("http://localhost:9000/get_all_files")
             let files = request.data;
 
-            console.log('Files',files)
             if(files){
                 setFiles(files)
             }
@@ -33,13 +34,16 @@ function Mainbody() {
                  {
                     files.map((ele)=>{
                         const {FileName,FileURL,createdAt} = JSON.parse(ele);
-                        console.log('Printing ele',ele)
                        return <Card name={FileName} url={FileURL} createdAt={createdAt} />
                         
                     })            
                  }
-                 <Card />   
+                 <Card />  
+                 
             </div>
+            <Link to="/">
+                 <Button variant="contained" color="primary" style={{ fontSize: "14px" }}>Back</Button>
+             </Link> 
         </div>
     )
 }

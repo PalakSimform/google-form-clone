@@ -23,6 +23,7 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import axios from "axios";
 import { useParams } from "react-router";
+import { Link } from 'react-router-dom'
 import uuid from "react-uuid";
 
 function AddForm() {
@@ -244,6 +245,11 @@ function AddForm() {
                     {questionsUI()}
                     <div className="save_form">
                         <Button variant="contained" color="primary" onClick={dispatchAddQuestion} style={{ fontSize: "14px" }}>Save</Button>
+                    </div>
+                    <div className="save_form">
+                        <Link to="/getallforms">
+                            <Button variant="contained" color="primary" style={{ fontSize: "14px" }}>View All Forms</Button>
+                        </Link>
                     </div>
                 </div>
             </div>
