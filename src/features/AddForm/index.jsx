@@ -31,6 +31,7 @@ function AddForm() {
     const dispatch = useDispatch()
     const [documentName, setDocName] = useState("untitled Document");
     const [questions, setQuestions] = useState([]);
+    const [errorMessage,setErrorMessage] = useState([])
     const { id } = useParams();
 
     useEffect(() => {
@@ -124,7 +125,30 @@ function AddForm() {
             "document_name": documentName,
             "questions": questions
         }
-        dispatch(addQuestionAction(payload))
+        var error = [];
+        if(!payload.document_name){
+
+               error = ['Document name is required' ]   
+        }
+        payload.questions.forEach((ques)=> {
+            if(!ques.questionText || !ques.questionType || !ques.options){
+              error = [...error,'One or more elements are empty. Please enter value']
+            }
+            ques.options.forEach((options) => {
+                if(!options.optionText){
+                    if(!error.includes('Enter option text'))
+                   error = [...error,'Enter option text']
+                }
+            })
+        })
+        setErrorMessage(error)
+        if(error.length === 0){
+            
+           
+            dispatch(addQuestionAction(payload))
+            
+        }
+        
         // axios.post(`http://localhost:9000/add_questions/${id}`, {
         //     "document_name": documentName,
         //     "questions": questions,
@@ -172,7 +196,7 @@ function AddForm() {
                     <div className="question_boxes">
                         <AccordionDetails className="add_questions" style={{ display: "flex", 'flex-direction': 'column' }}>
                             <div className="add_question_top">
-                                <input type="text" className="question" placeholder="Question" value={ques.questionText} onChange={(e) => { changeQuestion(e.target.value, i) }}></input>
+                                <input type="text" className="question" placeholder="Question" value={ques.questionText} onChange={(e) => { changeQuestion(e.target.value, i) }} ></input>
                                 <CropOriginalIcon style={{ color: "#5f6368" }} />
 
                                 <Select className="select" style={{ color: "#5f6368", fontSize: "13px" }} >
@@ -239,6 +263,7 @@ function AddForm() {
                 <div className="section">
                     <div className="question_title_section">
                         <div className="question_form_top">
+                        {errorMessage.map((error)=><h5 style={{ color: "red" }}> {error}</h5>)}
                             <input type="text" className="question_form_top_name" style={{ color: "black" }} placeholder={documentName} value={documentName} onChange={(e) => { setDocName(e.target.value) }}></input>
                         </div>
                     </div>
